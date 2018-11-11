@@ -1,12 +1,11 @@
-package chat_bot;
+package chatbot;
 
 public class State {
-	
-	public String name;
-	public String message;
+  public String name;
+  public String message;
 
-	public State(String _name, String _message) {
-		name = _name;
-		message = _message;
-	}
+  public State(String stateName, String stateMessage) {
+    name = stateName;
+	message = stateMessage;
+  }
 }
