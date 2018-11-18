@@ -15,26 +15,24 @@ public class Bot {
 
   public Bot() throws Exception {} 
 
-  public boolean isMakingAction(String cmd) { 
+  public String makeAction(String cmd) { 
 	if (cmd.startsWith("/")) { 
-	  return isMakingCommand(cmd); 
+	  return makeCommand(cmd); 
 	} else { 
-	  setParametres(cmd); 
-	} 
-	return true; 
+	  return setParametres(cmd); 
+	}
   } 
 
-  private boolean isMakingCommand(String cmd) { 
+  private String makeCommand(String cmd) { 
     State next = fSM.changeState(currentState, cmd); 
 	if (next == null) { 
 	  if (cmd.equals("/stop")) { 
-		return false;
+		return null;
 	  } 
-	  System.out.println("Не могу понять команду\n"); 
+	  return "Не могу понять команду";
 	} else { 
-	  System.out.println(next.message); 
 	  if (next.name.equals("movie")) { 
-		chooseMovie(); 
+		return getMovieName(); 
 	  } else if (next.name.equals("genres")) { 
 		genres.clear(); 
 	  } else if (next.name.equals("years")) { 
@@ -45,17 +43,18 @@ public class Bot {
 	  } 
 	  currentState = next; 
 	} 
-	return true; 
+	return next.message; 
   } 
 	
-  private void setParametres(String parametre) { 
+  private String setParametres(String parametre) { 
 	if (currentState.name.equals("genres") && isGenres(parametre)) { 
 	  genres.add(parametre); 
 	} else if (currentState.name.equals("years") && isYears(parametre)) { 
 	  years = parametre.split("-"); 
 	} else { 
-	  System.out.println("ОШИБКА. Неправильные данные.\n"); 
-	} 
+	  return "ОШИБКА. Неправильные данные.";
+	}
+	return "";
   }
 
   private boolean isGenres(String line) {
@@ -79,16 +78,16 @@ public class Bot {
 	} 
   } 
 
-  private void chooseMovie() { 
+  private String getMovieName() { 
     try { 
 	  String movie = generator.chooseMovie(genres, years); 
 	  if (movie.equals("")) { 
-		System.out.println("Я не нашел фильма с такими параметрами. Попробуй изменить их\n"); 
+		return "Я не нашел фильма с такими параметрами. Попробуй изменить их";
 	  } else { 
-		System.out.println(movie); 
+		return movie;
 	  } 
 	} catch (Exception e) {
-		e.printStackTrace();
+		return e.getMessage();
 	} 
   } 
 }

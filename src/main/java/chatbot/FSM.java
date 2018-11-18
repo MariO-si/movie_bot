@@ -6,9 +6,9 @@ import java.util.Map;
 public class FSM { 
   private State start = new State("start", ""); 
   private State genres = new State("genres", "Выберите жанр: триллер, боевик, драма, фантастика, "
-      + "аниме, приключения, криминал, фэнтези , военный , мультфильм , комедия , семейный , "
-  	  + "детектив , мелодрама , биография , история"); 
-  private State years = new State("years", "Выбери года создания фильма в формате YYYY-YYYY") ; 
+      + "аниме, приключения, криминал, фэнтези, военный, мультфильм, комедия, семейный, "
+  	  + "детектив, мелодрама, биография, история"); 
+  private State years = new State("years", "Выберите года создания фильма в формате YYYY-YYYY") ; 
   private State movie = new State("movie", "Выбираю фильм...\n"); 
   private State help = new State("help", "Этот бот умеет выбирать фильм по жанрам и годам, " + 
   	  "заданными пользователем, основываясь на данных сайта kinopoisk.ru\r" + 

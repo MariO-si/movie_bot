@@ -7,9 +7,12 @@ public class Start {
     System.out.println("Press /start"); 
     Bot bot = new Bot(); 
     try (Scanner scanner = new Scanner(System.in)) { 
-      while (true) { 
-        if (!bot.isMakingAction(scanner.nextLine())) { 
-          break; 
+      while (true) {
+    	String message = bot.makeAction(scanner.nextLine());
+        if (message != null) { 
+          System.out.println(message);
+        } else {
+          break;
         }
       } 
     } 
