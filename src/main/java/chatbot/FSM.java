@@ -1,24 +1,24 @@
 package chatbot; 
 
-import java.util.HashMap; 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FSM { 
   private State start = new State("start", ""); 
   private State genres = new State("genres", "Выберите жанр: триллер, боевик, драма, фантастика, "
       + "аниме, приключения, криминал, фэнтези, военный, мультфильм, комедия, семейный, "
-  	  + "детектив, мелодрама, биография, история"); 
-  private State years = new State("years", "Выберите года создания фильма в формате YYYY-YYYY") ; 
+  	  + "детектив, мелодрама, биография, история, мюзикл"); 
+  private State years = new State("years", "Выберите года создания фильма в формате YYYY-YYYY"); 
   private State movie = new State("movie", "Выбираю фильм...\n"); 
   private State help = new State("help", "Этот бот умеет выбирать фильм по жанрам и годам, " + 
-  	  "заданными пользователем, основываясь на данных сайта kinopoisk.ru\r" + 
+  	  "заданными пользователем, основываясь на данных сайта kinopoisk.ru\r\n" + 
       "Команды для общения:\r\n" + 
 	  "/help - вызов справки\r\n" + 
 	  "/restart - перезапуск бота\r\n" + 
 	  "/genres - задать жанры\r\n" + 
 	  "/years - задать года\r\n" + 
-	  "/movie - найти фильм\n" + 
-	  "/stop - закрыть программу"); 
+	  "/movie - найти фильм\n"); 
   private Map<State, Map<String, State>> movingToState = new HashMap<State, Map<String, State>>();
 
   public FSM() { 
@@ -50,7 +50,11 @@ public class FSM {
 
   public State getStart() { 
 	return start; 
-  } 
+  }
+  
+  public ArrayList<String> getNextCommands(State state) { 
+    return new ArrayList<String>(movingToState.get(state).keySet()); 
+  }
 	
   public State changeState(State state, String cmd) { 
 	return movingToState.get(state).get(cmd); 

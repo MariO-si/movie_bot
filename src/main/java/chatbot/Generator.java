@@ -1,21 +1,21 @@
 package chatbot; 
 
 import java.io.*;
-import java.net.*; 
+import java.net.*;
 import java.util.ArrayList; 
 import java.util.Scanner;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern; 
+import java.util.regex.Pattern;
 
-public class Generator { 
-  private String[] dataMovies; 
-  private int movieNum = 1;
-  private Pattern namePattern = Pattern.compile("data-film-title=\"[[^\"].{1}]+\""); 
+public class Generator {
+  public int movieNum = 1;
+  private String[] dataMovies;
+  private Pattern namePattern = Pattern.compile("data-film-title=\"[[^\"].{1}]+\"");
+  private Pattern genrePattern = Pattern.compile("(?<=\\()(\\D+)[^(\\.+)](?=\\.?\\.?\\.?\\))");
   private Pattern yearPattern = Pattern.compile("\\(\\d{4}\\)"); 
-  private Pattern ratingPattern = Pattern.compile("data-film-rating=\"[[^\"].{1}]+\""); 
-  private Pattern genrePattern = Pattern.compile("(?<=\\()(\\D+)[^(\\.+)](?=\\.?\\.?\\.?\\))"); 
+  private Pattern ratingPattern = Pattern.compile("data-film-rating=\"[[^\"].{1}]+\"");
 
-  public Generator() throws Exception { 
+  public Generator() throws Exception {
     downloadHtmlCode();
     FileInputStream stream = new FileInputStream("html.txt");
     InputStreamReader streamReader = new InputStreamReader(stream, "windows-1251");
@@ -31,7 +31,11 @@ public class Generator {
 	} 
   } 
 
-  private void downloadHtmlCode() throws Exception { 
+  private void downloadHtmlCode() throws Exception {
+  	File f = new File("html.txt");
+    if (f.exists() && f.isFile()){
+      return;
+	}
     URL url = new URL("https://www.kinopoisk.ru/top/lists/58/filtr/all/sort/order/perpage/200/");
     InputStreamReader reader = new InputStreamReader(url.openStream(), "windows-1251");
 	try (BufferedReader in = new BufferedReader(reader)) { 
@@ -55,7 +59,7 @@ public class Generator {
 	  String currentGenre = findGenres(dataMovies[i], genres); 
 	  int currentYear = findYear(dataMovies[i], years); 
 	  if (currentGenre != null && currentYear != -1) { 
-		String currentName = findInfo(namePattern.matcher(dataMovies[i])).substring(16); 
+		String currentName = findInfo(namePattern.matcher(dataMovies[i])).substring(16);
 		String currentRating = findInfo(ratingPattern.matcher(dataMovies[i])).substring(18, 23); 
 		movieNum = i + 1; 
 		return String.format("%s\nРейтинг: %s\nЖанр: %s\nГод: %s\n", currentName, 
