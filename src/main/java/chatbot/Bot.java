@@ -76,7 +76,8 @@ public class Bot {
   private String getMovieName(User user) {
 	try {
 	  String movie = generator.chooseMovie(user.genres, user.years);
-	  if (movie.equals("")) { 
+	  if (movie.equals("")) {
+        generator.movieNum = 1;
 		return "Я не нашел фильма с такими параметрами. Попробуй изменить их"; 
 	  } else {
 		return movie; 

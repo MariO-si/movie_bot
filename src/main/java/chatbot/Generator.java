@@ -56,10 +56,10 @@ public class Generator {
 
   public String chooseMovie(ArrayList<String> genres, String[] years) throws Exception { 
 	for (int i = movieNum; i < dataMovies.length; i++) { 
-	  String currentGenre = findGenres(dataMovies[i], genres); 
+	  String currentGenre = findGenres(dataMovies[i], genres);
 	  int currentYear = findYear(dataMovies[i], years); 
 	  if (currentGenre != null && currentYear != -1) { 
-		String currentName = findInfo(namePattern.matcher(dataMovies[i])).substring(16);
+		String currentName = findInfo(namePattern.matcher(dataMovies[i])).substring(16).replaceAll("&nbsp;", " ");
 		String currentRating = findInfo(ratingPattern.matcher(dataMovies[i])).substring(18, 23); 
 		movieNum = i + 1; 
 		return String.format("%s\nРейтинг: %s\nЖанр: %s\nГод: %s\n", currentName, 
