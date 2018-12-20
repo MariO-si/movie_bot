@@ -44,7 +44,6 @@
           <encoding>UTF-8</encoding>
           <verbose>true</verbose>
           <fork>true</fork>
-          <release>10</release>
         </configuration>
       </plugin>
       <plugin>
