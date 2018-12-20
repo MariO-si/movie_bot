@@ -4,10 +4,6 @@
   <groupId>chat_bot</groupId>
   <artifactId>chat_bot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
   <packaging>jar</packaging>
   <dependencies>
     <dependency>
@@ -46,6 +42,8 @@
           <source>1.8</source>
           <target>1.8</target>
           <encoding>UTF-8</encoding>
+          <verbose>true</verbose>
+          <fork>true</fork>
           <release>10</release>
         </configuration>
       </plugin>
