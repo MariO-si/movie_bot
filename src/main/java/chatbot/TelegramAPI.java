@@ -31,14 +31,14 @@ public class TelegramAPI extends TelegramLongPollingBot {
 	Message message = update.getMessage(); 
 	String text = message.getText(); 
 	String chatId = update.getMessage().getChatId().toString();
-	if (text.equals("/start") && !app.map.containsKey(chatId)) {
+	if (text.equals("/start") && !app.currentUsers.containsKey(chatId)) {
 	  try {
 	    app.initUser(chatId);
 	  } catch (Exception e) {
 	    e.printStackTrace();
 	  } 
 	}
-	if (!app.map.containsKey(chatId)) {
+	if (!app.currentUsers.containsKey(chatId)) {
 	  SendMessage sendMessage = createMessage(chatId, "Нажмите /start");
 	  printMessage(sendMessage);
 	} else { 
@@ -51,8 +51,8 @@ public class TelegramAPI extends TelegramLongPollingBot {
   } 
 
   public void makeCommand(String chatId, String text, Message message) throws Exception { 
-	String answer = app.map.get(chatId).bot.makeAction(text, app.map.get(chatId)); 
-	List<String> buttonNames = app.map.get(chatId).bot.getNextCommands(app.map.get(chatId)); 
+	String answer = app.currentUsers.get(chatId).bot.makeAction(text, app.currentUsers.get(chatId));
+	List<String> buttonNames = app.currentUsers.get(chatId).bot.getNextCommands(app.currentUsers.get(chatId));
 	SendMessage sendMessage = createMessage(chatId, answer);
     setButtons(sendMessage, buttonNames);
     printMessage(sendMessage);

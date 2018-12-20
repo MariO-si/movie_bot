@@ -1,18 +1,20 @@
 package chatbot; 
 
-import java.util.Calendar; 
+import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List; 
 
 public class Bot {
-  private FSM fSM = new FSM(); 
+  private FSM fSM = new FSM();
   private final String[] allGenres = new String[] {"триллер", "боевик", "драма", 
 	  "фантастика", "аниме", "приключения", "криминал", "фэнтези", "военный", "мультфильм", 
 	      "комедия", "семейный", "детектив", "мелодрама", "биография", "история", "мюзикл"}; 
   private Generator generator = new Generator();
+  public String currentMovie;
 
   public Bot() throws Exception {}
 
-  public String makeAction(String cmd, User user) {
+  public String makeAction(String cmd, User user) throws SQLException {
 	if (cmd.startsWith("/")) { 
 	  return makeCommand(cmd, user); 
 	} else { 
@@ -41,11 +43,18 @@ public class Bot {
 	return next.message; 
   } 
 
-  public String setParametres(String parametre, User user) { 
+  public String setParametres(String parametre, User user) throws SQLException { 
 	if (user.currentState.name.equals("genres") && isGenres(parametre)) { 
 	  user.genres.add(parametre); 
 	} else if (user.currentState.name.equals("years") && isYears(parametre)) { 
 	  user.years = parametre.split("-"); 
+	} else if (user.currentState.name.equals("movie")) {
+	  if (parametre.equals("Да")) {
+		generator.addMovieToDataBase(currentMovie, user.id);
+		return getMovieName(user);
+	  } else if (parametre.equals("Нет")) {
+		return "";
+	  }
 	} else { 
 	  return "ОШИБКА. Неправильные данные."; 
 	} 
@@ -75,7 +84,7 @@ public class Bot {
 
   private String getMovieName(User user) {
 	try {
-	  String movie = generator.chooseMovie(user.genres, user.years);
+	  String movie = generator.chooseMovie(user.genres, user.years, user);
 	  if (movie.equals("")) {
         generator.movieNum = 1;
 		return "Я не нашел фильма с такими параметрами. Попробуй изменить их"; 

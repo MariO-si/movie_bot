@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ConsoleApplication {
   public static void main(String[] args) throws Exception { 
 	System.out.println("Press /start"); 
-	User user = new User(); 
+	User user = new User("0");
 	try (Scanner scanner = new Scanner(System.in)) { 
 	  while (true) { 
 		String message = user.bot.makeAction(scanner.nextLine(), user); 

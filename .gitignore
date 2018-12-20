@@ -1,0 +1,7 @@
+/target/
+
+/.idea
+/.project
+/chat_bot.iml
+/.classpath
+/.settings

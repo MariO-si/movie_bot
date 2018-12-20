@@ -7,7 +7,7 @@ import org.junit.Test;
 public class BotTest {
   @Test
   public void testIsMakingAction() throws Exception {
-	User usr = new User();
+	User usr = new User("0");
     String help = "Этот бот умеет выбирать фильм по жанрам и годам, " + 
         "заданными пользователем, основываясь на данных сайта kinopoisk.ru\r\n" + 
     	    "Команды для общения:\r\n" + 

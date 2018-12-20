@@ -7,15 +7,17 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
 public class TelegramApplication { 
-  Map<String, User> map; 
+  Map<String, User> currentUsers;
+  DataBase base;
 
   public TelegramApplication() throws Exception { 
-	map = new HashMap<String, User>(); 
+	currentUsers = new HashMap<String, User>();
+    base = new DataBase();
   } 
 
   public User initUser(String token) throws Exception {
-	User user = new User(); 
-	map.put(token, user); 
+	User user = new User(token);
+	currentUsers.put(token, user);
 	return user;
   } 
 
