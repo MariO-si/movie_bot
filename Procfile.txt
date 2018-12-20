@@ -1,1 +1,1 @@
-web: bundle exec telegram server -p 796584068:AAEXo7J45zrNMyVg67II1FDX6_dBXrhv74I
+sh target/bin/chat_bot
