@@ -54,6 +54,8 @@ public class Bot {
 		return getMovieName(user);
 	  } else if (parametre.equals("Нет")) {
 		return "";
+	  } else {
+	    return "ОШИБКА. Неправильные данные.";
 	  }
 	} else { 
 	  return "ОШИБКА. Неправильные данные."; 
