@@ -1,0 +1,1 @@
+worker: java -jar target/chat_bot-0.0.1-SNAPSHOT.jar
